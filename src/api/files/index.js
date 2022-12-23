@@ -7,7 +7,32 @@ const filesRouter = express.Router();
 
 filesRouter.post(
   "/:productId/single",
-  multer().single("avatar"),
+  multer().single("imageUrl"),
+  async (req, res, next) => {
+    try {
+      const originalFileExtension = extname(req.file.originalName);
+      const fileName = req.params.productId + originalFileExtension;
+
+      await saveProductsAvatars(fileName, req.file.buffer);
+      const url = `http://localhost:3001/img/products/${fileName}`;
+      const products = await getProducts();
+      const index = products.findIndex((product) => product.id === req.params.productId);
+      if (index !== -1) {
+        const oldProduct = products[index];
+        const updatedproduct = { ...oldProduct, updateAt: new Date() };
+        products[index] = updatedproduct;
+        await writeProducts(products);
+      }
+      res.send("File uploaded");
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+filesRouter.put(
+  "/:productId/single",
+  multer().single("imageUrl"),
   async (req, res, next) => {
     try {
       const originalFileExtension = extname(req.file.originalName);

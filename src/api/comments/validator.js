@@ -22,7 +22,7 @@ export const triggerBadRequest = (req, res, next) => {
   console.log(errors);
   if (!errors.isEmpty()) {
     next(
-      createHttpError(400, "Errors during book validation", {
+      createHttpError(400, "Errors during comment validation", {
         errorsList: errors.array(),
       })
     );
