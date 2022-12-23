@@ -4,15 +4,15 @@ import fs from "fs-extra";
 
 const { readJSON, writeJSON, writeFile } = fs;
 const dataFolderPath = join(dirname(fileURLToPath(import.meta.url)), "../data");
-const publicFolderPath = join(process.cwd(), "./public/img/users");
+const publicFolderPath = join(process.cwd(), "./public/img/products");
 
-const usersJSONPath = join(dataFolderPath, "users.json");
-const blogsJSONPath = join(dataFolderPath, "blogs.json");
+const productsJSONPath = join(dataFolderPath, "products.json");
+const commentsJSONPath = join(dataFolderPath, "comments.json");
 
-export const getUsers = () => readJSON(usersJSONPath);
-export const writeUsers = (usersArray) => writeJSON(usersJSONPath, usersArray);
-export const getBlogs = () => readJSON(blogsJSONPath);
-export const writeBlogs = (blogsArray) => writeJSON(blogsJSONPath, blogsArray);
+export const getProducts = () => readJSON(productsJSONPath);
+export const writeProducts = (productsArray) => writeJSON(productsJSONPath, productsArray);
+export const getcomments = () => readJSON(commentsJSONPath);
+export const writecomments = (commentsArray) => writeJSON(commentsJSONPath, commentsArray);
 
-export const saveUsersAvatars = (filename, contentAsABuffer) =>
+export const saveProductsAvatars = (filename, contentAsABuffer) =>
   writeFile(join(publicFolderPath, filename), contentAsABuffer);

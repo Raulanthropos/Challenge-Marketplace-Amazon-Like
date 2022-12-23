@@ -1,28 +1,27 @@
 import express from "express";
 import multer from "multer";
 import { extname } from "path";
-import { saveUsersAvatars, getUsers, writeUsers } from "../../lib/fs-tools.js";
+import { saveProductsAvatars, getProducts, writeProducts } from "../../lib/fs-tools.js";
 
 const filesRouter = express.Router();
 
 filesRouter.post(
-  "/:userId/single",
+  "/:productId/single",
   multer().single("avatar"),
   async (req, res, next) => {
     try {
-      const originalFileExtensioin = extname(req.file.originalname);
-      const fileName = req.params.userId + originalFileExtensioin;
+      const originalFileExtension = extname(req.file.originalName);
+      const fileName = req.params.productId + originalFileExtension;
 
-      await saveUsersAvatars(fileName, req.file.buffer);
-      const url = `http://localhost:3001/img/users/${fileName}`;
-      const users = await getUsers();
-      const index = users.findIndex((user) => user.id === req.params.userId);
+      await saveProductsAvatars(fileName, req.file.buffer);
+      const url = `http://localhost:3001/img/products/${fileName}`;
+      const products = await getProducts();
+      const index = products.findIndex((product) => product.id === req.params.productId);
       if (index !== -1) {
-        const oldUser = users[index];
-        const author = { ...oldUser.author, avatar: url };
-        const updatedUser = { ...oldUser, author, updateAt: new Date() };
-        users[index] = updatedUser;
-        await writeUsers(users);
+        const oldProduct = products[index];
+        const updatedproduct = { ...oldProduct, updateAt: new Date() };
+        products[index] = updatedproduct;
+        await writeProducts(products);
       }
       res.send("File uploaded");
     } catch (error) {

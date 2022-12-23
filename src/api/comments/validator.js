@@ -1,7 +1,7 @@
 import { checkSchema, validationResult } from "express-validator";
 import createHttpError from "http-errors";
 
-const blogSchema = {
+const commentSchema = {
   comment: {
     in: ["body"],
     isString: {
@@ -16,7 +16,7 @@ const blogSchema = {
   },
 };
 
-export const checkBlogsSchema = checkSchema(blogSchema);
+export const checkCommentsSchema = checkSchema(commentSchema);
 export const triggerBadRequest = (req, res, next) => {
   const errors = validationResult(req);
   console.log(errors);

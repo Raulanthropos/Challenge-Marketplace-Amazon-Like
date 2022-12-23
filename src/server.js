@@ -1,7 +1,7 @@
 import express from "express";
 import listEndpoints from "express-list-endpoints";
-import blogsRouter from "./api/blogs/index.js";
-import usersRouter from "./api/users/index.js";
+import commentsRouter from "./api/comments/index.js";
+import productsRouter from "./api/products/index.js";
 import filesRouter from "./api/files/index.js";
 import { join } from "path";
 import {
@@ -21,8 +21,8 @@ server.use(express.static(publicFolderPath));
 server.use(cors());
 server.use(express.json());
 
-server.use("/authors", usersRouter);
-server.use("/blogs", blogsRouter);
+server.use("/products", productsRouter);
+server.use("/comments", commentsRouter);
 server.use("/files", filesRouter);
 
 server.use(badRequestHanlder);
