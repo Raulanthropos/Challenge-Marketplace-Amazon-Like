@@ -5,13 +5,13 @@ const commentSchema = {
   comment: {
     in: ["body"],
     isString: {
-      errorMessage: "Comment is mandatory field and needs to be a string!",
+      errorMessage: "Comment is a mandatory field and needs to be a string!",
     },
   },
   productId: {
     in: ["body"],
     isString: {
-      errorMessage: "Id is mandatory field and needs to be a string!",
+      errorMessage: "Id is a mandatory field and needs to be a string!",
     },
   },
 };
