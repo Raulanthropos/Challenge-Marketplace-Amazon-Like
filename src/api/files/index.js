@@ -32,20 +32,20 @@ filesRouter.post(
 
 filesRouter.put(
   "/:productId/single",
-  multer().single("imageUrl"),
+  multer().single("image"),
   async (req, res, next) => {
     try {
       const originalFileExtension = extname(req.file.originalName);
       const fileName = req.params.productId + originalFileExtension;
 
       await saveProductsAvatars(fileName, req.file.buffer);
-      const url = `http://localhost:3001/img/products/${fileName}`;
+      const url = `http://localhost:3001/products/${fileName}`;
       const products = await getProducts();
       const index = products.findIndex((product) => product.id === req.params.productId);
       if (index !== -1) {
         const oldProduct = products[index];
-        const updatedproduct = { ...oldProduct, updateAt: new Date() };
-        products[index] = updatedproduct;
+        const updatedProduct = { ...oldProduct, updateAt: new Date() };
+        products[index] = updatedProduct;
         await writeProducts(products);
       }
       res.send("File uploaded");
