@@ -5,7 +5,6 @@
 ### Documentation can be found here: 
 
 [![Documentation](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/24358339/2s8ZDSbkB1)
-
 #### This application is a marketplace for buying and reviewing smartphones, TVs, and accessories.
 
 ### Features
