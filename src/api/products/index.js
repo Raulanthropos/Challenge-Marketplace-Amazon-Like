@@ -57,9 +57,8 @@ productsRouter.get("/:productId", async (req, res, next) => {
     const productsArray = await getProducts();
     const product = productsArray.find(product => product.id === req.params.productId)
     console.log("this is the product", product)
-    const foundProduct = productsArray.find((product) => product.id === productId);
     if (product) {
-      res.send(foundProduct);
+      res.send(product);
     } else {
       next(NotFound(`Product with product id ${req.params.productId} was not found!`))
     }

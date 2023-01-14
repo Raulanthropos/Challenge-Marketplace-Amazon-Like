@@ -8,7 +8,7 @@ const commentSchema = {
       errorMessage: "Comment is a mandatory field and needs to be a string!",
     },
   },
-  productId: {
+  commentId: {
     in: ["body"],
     isString: {
       errorMessage: "Id is a mandatory field and needs to be a string!",

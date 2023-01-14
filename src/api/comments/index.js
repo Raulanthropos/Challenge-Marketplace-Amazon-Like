@@ -18,15 +18,14 @@ const getComments = () => JSON.parse(fs.readFileSync(commentsJSONPath));
 const postComments = (commentsArray) =>
   fs.writeFileSync(commentsJSONPath, JSON.stringify(commentsArray));
 
-commentsRouter.post("/", checkCommentsSchema, triggerBadRequest, (req, res, next) => {
-  const commentsArray = getComments();
+commentsRouter.post("/", checkCommentsSchema, triggerBadRequest, async (req, res, next) => {
+  const commentsArray = await getComments();
   try {
     const newComment = {
       ...req.body,
       createdAt: new Date(),
       id: uniqid(),
     };
-
     commentsArray.push(newComment);
     postComments(commentsArray);
     res.status(201).send({
@@ -37,9 +36,9 @@ commentsRouter.post("/", checkCommentsSchema, triggerBadRequest, (req, res, next
   }
 });
 
-commentsRouter.get("/", (req, res, next) => {
+commentsRouter.get("/", async (req, res, next) => {
   try {
-    const commentsArray = getComments();
+    const commentsArray = await getComments();
     if (req.query && req.query.brand) {
       const filteredcomments = commentsArray.filter(
         (comment) => comment.brand === req.query.brand
@@ -53,9 +52,9 @@ commentsRouter.get("/", (req, res, next) => {
   }
 });
 
-commentsRouter.get("/:commentId", (req, res, next) => {
+commentsRouter.get("/:commentId", async (req, res, next) => {
   try {
-    const commentsArray = getComments();
+    const commentsArray = await getComments();
     const comment = commentsArray.find((comment) => comment.id === req.params.commentId);
     if (comment) {
       res.send(comment);
@@ -67,9 +66,9 @@ commentsRouter.get("/:commentId", (req, res, next) => {
   }
 });
 
-commentsRouter.put("/:commentId", (req, res, next) => {
+commentsRouter.put("/:commentId", async (req, res, next) => {
   try {
-    const commentsArray = getComments();
+    const commentsArray = await getComments();
 
     const index = commentsArray.findIndex((comment) => comment.id === req.params.commentId);
     const oldcomment = commentsArray[index];
@@ -86,10 +85,9 @@ commentsRouter.put("/:commentId", (req, res, next) => {
   }
 });
 
-commentsRouter.delete("/:commentId", (req, res, next) => {
+commentsRouter.delete("/:commentId", async (req, res, next) => {
   try {
-    const commentsArray = getComments();
-
+    const commentsArray = await getComments();
     const remainingComments = commentsArray.filter(
       (comment) => comment.id !== req.params.commentId
     );
