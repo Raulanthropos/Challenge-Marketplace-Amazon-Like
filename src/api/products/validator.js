@@ -1,11 +1,13 @@
 import { checkSchema, validationResult } from "express-validator";
 import createHttpError from "http-errors";
 
+const { BadRequest } = createHttpError;
+
 const productSchema = {
   name: {
     in: ["body"],
     isString: {
-      errorMessage: "Comment is a mandatory field and needs to be a string!",
+      errorMessage: "Name is a mandatory field and needs to be a string!",
     },
   },
   description: {
@@ -20,12 +22,6 @@ const productSchema = {
       errorMessage: "Brand is a mandatory field and needs to be a string!",
     }
 },
-  _id: {
-    in: ["body"],
-    isString: {
-      errorMessage: "Id is a mandatory field and needs to be a string!",
-    }
-    },
   category: {
     in: ["body"],
     isString: {
@@ -35,18 +31,19 @@ const productSchema = {
   price: {
     in: ["body"],
     isString: {
-      errorMessage: "Price is a mandatory field and needs to be a string!",
+      errorMessage: "Price is a mandatory field and needs to be a number!",
     },
   },
 }
 
-export const checkProductsSchema = checkSchema(productSchema);
+export const checksProductSchema = checkSchema(productSchema);
+
 export const triggerBadRequest = (req, res, next) => {
   const errors = validationResult(req);
   console.log(errors);
   if (!errors.isEmpty()) {
     next(
-      createHttpError(400, "Errors during product validation", {
+      BadRequest(400, "Errors during product validation", {
         errorsList: errors.array(),
       })
     );

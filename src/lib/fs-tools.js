@@ -6,6 +6,8 @@ const { readJSON, writeJSON, writeFile } = fs;
 const dataFolderPath = join(dirname(fileURLToPath(import.meta.url)), "../data");
 const publicFolderPath = join(process.cwd(), "./public/img/products");
 
+console.log(dataFolderPath, publicFolderPath, process.cwd());
+
 const productsJSONPath = join(dataFolderPath, "products.json");
 const commentsJSONPath = join(dataFolderPath, "comments.json");
 
@@ -16,3 +18,5 @@ export const writecomments = (commentsArray) => writeJSON(commentsJSONPath, comm
 
 export const saveProductsAvatars = (filename, contentAsABuffer) =>
   writeFile(join(publicFolderPath, filename), contentAsABuffer);
+
+  

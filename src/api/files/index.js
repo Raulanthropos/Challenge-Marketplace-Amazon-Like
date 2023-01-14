@@ -10,7 +10,7 @@ filesRouter.post(
   multer().single("imageUrl"),
   async (req, res, next) => {
     try {
-      const originalFileExtension = extname(req.file.originalName);
+      const originalFileExtension = extname(req.file.originalname);
       const fileName = req.params.productId + originalFileExtension;
 
       await saveProductsAvatars(fileName, req.file.buffer);
@@ -19,7 +19,8 @@ filesRouter.post(
       const index = products.findIndex((product) => product.id === req.params.productId);
       if (index !== -1) {
         const oldProduct = products[index];
-        const updatedproduct = { ...oldProduct, updateAt: new Date() };
+        const productPhoto = { ...oldProduct.imageUrl, imageUrl: url };
+        const updatedproduct = { ...oldProduct, productPhoto, updateAt: new Date() };
         products[index] = updatedproduct;
         await writeProducts(products);
       }
@@ -48,7 +49,7 @@ filesRouter.put(
         products[index] = updatedProduct;
         await writeProducts(products);
       }
-      res.send("File uploaded");
+      res.send("File edited");
     } catch (error) {
       next(error);
     }
