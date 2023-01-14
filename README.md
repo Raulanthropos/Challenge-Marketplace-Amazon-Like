@@ -9,8 +9,9 @@
 
 ### Features
 
+* User can add, update or delete products and reviews
 * Browse and search for products in the categories of smartphones, TVs, and accessories
 * User can filter by category, to find the more relevant products
 * Add products to the database
+* Access reviews and ratings for products
 * Leave reviews and ratings for products
-* User can add, update or delete products and reviews
