@@ -15,7 +15,7 @@ const productsJSONPath = join(
   "../../data/products.json"
 );
 
-productsRouter.post("/", checksProductSchema, triggerBadRequest, async (req, res, next) => {
+productsRouter.post("/", checksProductSchema, async (req, res, next) => {
   try {
     const newproduct = {
       ...req.body,
